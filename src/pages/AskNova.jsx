@@ -229,7 +229,7 @@ export default function AskNova() {
                         </button>
                     </form>
                     <div className="text-center mt-3">
-                        <p className="text-[10px] text-slate-500 uppercase tracking-widest font-semibold"></p>
+                        <p className="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">Ai can make mistakes. Check important info.</p>
                     </div>
                 </div>
             </div>

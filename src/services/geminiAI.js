@@ -6,7 +6,7 @@ const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || ''
 
 export const askNovaAI = async (prompt, mode, contextArticle = null) => {
     if (!API_KEY) {
-        return "Oops! Please add your Gemini API key to the .env file as VITE_GEMINI_API_KEY to let me answer your questions using Google's generative AI."
+        return 
     }
 
     try {
@@ -36,6 +36,6 @@ export const askNovaAI = async (prompt, mode, contextArticle = null) => {
         return result.response.text()
     } catch (error) {
         console.error("Gemini API Error:", error)
-        return "Sorry, I encountered an error while processing your request to the Gemini API. Please check the console for details."
+        return "Sorry, I encountered an error while processing your request ."
     }
 }

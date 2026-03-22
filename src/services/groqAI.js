@@ -10,7 +10,7 @@ const MODELS = [
 
 export const askNovaAI = async (prompt, mode, contextArticle = null) => {
     if (!API_KEY) {
-        return "Oops! Please add your API key to the .env file as VITE_TOGETHER_API_KEY to let me answer your questions using AI."
+        return 
     }
 
     try {
