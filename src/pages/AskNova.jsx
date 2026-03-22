@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Send, Sparkles, Bot, User, Loader2, ArrowLeft } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { askNovaAI } from '../services/groqAI'
+import { askNovaAI } from '../services/geminiAI'
 import ReactMarkdown from 'react-markdown'
 
 const MODES = [
@@ -95,8 +95,8 @@ export default function AskNova() {
                             key={mode.id}
                             onClick={() => setActiveMode(mode.id)}
                             className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 ${activeMode === mode.id
-                                    ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/25'
-                                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                                ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/25'
+                                : 'text-slate-400 hover:text-white hover:bg-white/5'
                                 }`}
                         >
                             <span>{mode.icon}</span> <span className="hidden sm:inline">{mode.label}</span>
@@ -159,27 +159,27 @@ export default function AskNova() {
                                 {message.role === 'user' ? (
                                     message.content
                                 ) : (
-                                <div className="space-y-1">
-                                    <ReactMarkdown
-                                        components={{
-                                            p: ({node, ...props}) => <p className="mb-3 last:mb-0" {...props} />,
-                                            h1: ({node, ...props}) => <h1 className="text-xl font-bold mt-5 mb-3 text-white" {...props} />,
-                                            h2: ({node, ...props}) => <h2 className="text-lg font-bold mt-5 mb-3 text-white" {...props} />,
-                                            h3: ({node, ...props}) => <h3 className="text-base font-bold mt-4 mb-2 text-white" {...props} />,
-                                            strong: ({node, ...props}) => <strong className="font-semibold text-white" {...props} />,
-                                            ul: ({node, ...props}) => <ul className="list-disc pl-5 mb-3 space-y-1 marker:text-purple-400" {...props} />,
-                                            ol: ({node, ...props}) => <ol className="list-decimal pl-5 mb-3 space-y-1 marker:text-purple-400" {...props} />,
-                                            li: ({node, ...props}) => <li {...props} />,
-                                            code: ({node, inline, ...props}) => 
-                                                inline ? <code className="bg-black/30 px-1.5 py-0.5 rounded text-[13px] text-sky-300 font-mono" {...props} />
+                                    <div className="space-y-1">
+                                        <ReactMarkdown
+                                            components={{
+                                                p: ({ node, ...props }) => <p className="mb-3 last:mb-0" {...props} />,
+                                                h1: ({ node, ...props }) => <h1 className="text-xl font-bold mt-5 mb-3 text-white" {...props} />,
+                                                h2: ({ node, ...props }) => <h2 className="text-lg font-bold mt-5 mb-3 text-white" {...props} />,
+                                                h3: ({ node, ...props }) => <h3 className="text-base font-bold mt-4 mb-2 text-white" {...props} />,
+                                                strong: ({ node, ...props }) => <strong className="font-semibold text-white" {...props} />,
+                                                ul: ({ node, ...props }) => <ul className="list-disc pl-5 mb-3 space-y-1 marker:text-purple-400" {...props} />,
+                                                ol: ({ node, ...props }) => <ol className="list-decimal pl-5 mb-3 space-y-1 marker:text-purple-400" {...props} />,
+                                                li: ({ node, ...props }) => <li {...props} />,
+                                                code: ({ node, inline, ...props }) =>
+                                                    inline ? <code className="bg-black/30 px-1.5 py-0.5 rounded text-[13px] text-sky-300 font-mono" {...props} />
                                                         : <pre className="bg-black/50 p-4 rounded-xl overflow-x-auto my-3 border border-white/5"><code className="text-[13px] font-mono text-slate-300" {...props} /></pre>,
-                                            blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-purple-500/50 pl-4 py-1 italic text-slate-300 bg-white/5 rounded-r-lg my-3" {...props} />,
-                                            a: ({node, ...props}) => <a className="text-sky-400 hover:text-sky-300 underline underline-offset-2" target="_blank" rel="noopener noreferrer" {...props} />
-                                        }}
-                                    >
-                                        {message.content}
-                                    </ReactMarkdown>
-                                </div>
+                                                blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-purple-500/50 pl-4 py-1 italic text-slate-300 bg-white/5 rounded-r-lg my-3" {...props} />,
+                                                a: ({ node, ...props }) => <a className="text-sky-400 hover:text-sky-300 underline underline-offset-2" target="_blank" rel="noopener noreferrer" {...props} />
+                                            }}
+                                        >
+                                            {message.content}
+                                        </ReactMarkdown>
+                                    </div>
                                 )}
                             </div>
                         </motion.div>

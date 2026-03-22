@@ -1,22 +1,16 @@
-const API_KEY = import.meta.env.VITE_GROQ_API_KEY || ''
+const API_KEY = import.meta.env.VITE_TOGETHER_API_KEY || ''
+const API_URL = "https://api.together.xyz/v1/chat/completions"
 
-// Auto-detect OpenRouter keys based on prefix
-const isRoute = API_KEY.startsWith("sk-or")
-const API_URL = isRoute ? "https://openrouter.ai/api/v1/chat/completions" : "https://api.groq.com/openai/v1/chat/completions"
-
-// List of fallback models (in priority order) to automatically try if one is rate-limited
-const MODELS = isRoute
-    ? [
-        "qwen/qwen3-4b:free",                                           // Less well-known, high capacity
-        "cognitivecomputations/dolphin-mistral-24b-venice-edition:free",// Incredible quality, often uncrowded
-        "nvidia/nemotron-nano-9b-v2:free",                              // Fast NVIDIA alternative
-        "minimax/minimax-m2.5:free"                                     // Highly reliable enterprise free tier
-    ]
-    : ["llama3-8b-8192"] // Groq handles their own traffic well
+// Fallback models for Together AI
+const MODELS = [
+    "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",      // Blisteringly fast Llama 3.1 8B 
+    "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",     // Fantastic reasoning, slightly slower
+    "mistralai/Mixtral-8x7B-Instruct-v0.1"              // Hyper-reliable and fast
+]
 
 export const askNovaAI = async (prompt, mode, contextArticle = null) => {
     if (!API_KEY) {
-        return "Oops! Please add your API key to the .env file as VITE_GROQ_API_KEY to let me answer your questions using AI."
+        return "Oops! Please add your API key to the .env file as VITE_TOGETHER_API_KEY to let me answer your questions using AI."
     }
 
     try {
