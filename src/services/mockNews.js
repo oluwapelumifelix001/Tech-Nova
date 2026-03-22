@@ -24,7 +24,7 @@ export const fetchNewsFeed = async (selectedCategoryIds = []) => {
         // If no categories selected, just fetch general tech news
         if (!selectedCategoryIds || selectedCategoryIds.length === 0) {
             const query = 'technology OR science'
-            const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&max=10&apikey=${GNEWS_API_KEY}`
+            const url = `/api/news?q=${encodeURIComponent(query)}&lang=en&max=10&apikey=${GNEWS_API_KEY}`
             
             const response = await fetch(url)
             if (!response.ok) throw new Error(`GNews API error: ${response.status}`)
@@ -51,7 +51,7 @@ export const fetchNewsFeed = async (selectedCategoryIds = []) => {
         for (let i = 0; i < selectedCategoryIds.length; i++) {
             const categoryId = selectedCategoryIds[i]
             const query = getSearchQueryForCategory(categoryId)
-            const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&max=10&apikey=${GNEWS_API_KEY}`
+            const url = `/api/news?q=${encodeURIComponent(query)}&lang=en&max=10&apikey=${GNEWS_API_KEY}`
             
             // Respect GNews free tier limit of 1 request per second
             if (i > 0) {

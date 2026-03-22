@@ -5,13 +5,13 @@ const isRoute = API_KEY.startsWith("sk-or")
 const API_URL = isRoute ? "https://openrouter.ai/api/v1/chat/completions" : "https://api.groq.com/openai/v1/chat/completions"
 
 // List of fallback models (in priority order) to automatically try if one is rate-limited
-const MODELS = isRoute 
+const MODELS = isRoute
     ? [
         "qwen/qwen3-4b:free",                                           // Less well-known, high capacity
         "cognitivecomputations/dolphin-mistral-24b-venice-edition:free",// Incredible quality, often uncrowded
         "nvidia/nemotron-nano-9b-v2:free",                              // Fast NVIDIA alternative
         "minimax/minimax-m2.5:free"                                     // Highly reliable enterprise free tier
-      ] 
+    ]
     : ["llama3-8b-8192"] // Groq handles their own traffic well
 
 export const askNovaAI = async (prompt, mode, contextArticle = null) => {
@@ -21,7 +21,7 @@ export const askNovaAI = async (prompt, mode, contextArticle = null) => {
 
     try {
         let systemInstruction = "You are Nova, an AI assistant for the Tech Nova news platform. Keep responses concise, helpful, and engaging."
-        
+
         if (mode === 'eli5') {
             systemInstruction += " Explain this extremely simply, as if to a 5-year-old. Keep it short and use analogies."
         } else if (mode === 'detailed') {
@@ -60,12 +60,12 @@ export const askNovaAI = async (prompt, mode, contextArticle = null) => {
                 const errorText = await response.text()
                 console.warn(`Model ${currentModel} failed (${response.status}):`, errorText)
                 lastError = `API returned ${response.status}`
-                
+
                 // If it's a rate limit (429) or upstream server issue (502/503), try the next model
                 if (response.status === 429 || response.status >= 500) {
-                    continue; 
+                    continue;
                 }
-                
+
                 // If it's auth or billing error, break immediately
                 throw new Error(lastError)
             }

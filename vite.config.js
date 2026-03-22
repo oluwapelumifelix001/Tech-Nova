@@ -8,4 +8,13 @@ export default defineConfig({
     tailwindcss(),
     react()
   ],
+  server: {
+    proxy: {
+      '/api/news': {
+        target: 'https://gnews.io/api/v4/search',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/news/, '')
+      }
+    }
+  }
 })
