@@ -10,7 +10,6 @@ export default function ArticleCard({ article }) {
     const category = CATEGORIES.find(c => c.id === article.categoryId) || CATEGORIES[0]
 
     const handleExplain = () => {
-        // Navigate to AskNova with context
         navigate('/ask', { state: { contextArticle: article } })
     }
 

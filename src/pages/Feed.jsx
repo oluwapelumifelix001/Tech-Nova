@@ -18,12 +18,15 @@ export default function Feed() {
             setArticles(data)
             setIsLoading(false)
         }
-        loadNews()
-    }, [selectedCategories]) // Trigger refetch when categories change
+        const timeoutId = setTimeout(() => {
+            loadNews()
+        }, 1000)
+        return () => clearTimeout(timeoutId)
+    }, [selectedCategories])
 
     const filteredArticles = useMemo(() => {
         if (activeTab === 'all') return articles
-        if (selectedCategories.length === 0) return []
+        if (selectedCategories.length <= 0) return []
         return articles.filter(article => selectedCategories.includes(article.categoryId))
     }, [articles, activeTab, selectedCategories])
 
@@ -71,16 +74,22 @@ export default function Feed() {
                 </div>
             ) : filteredArticles.length === 0 ? (
                 <div className="text-center py-20 glass-panel rounded-3xl border-dashed">
-                    <p className="text-slate-400 mb-4">You haven't selected any categories yet.</p>
-                    <button
-                        onClick={() => {
-                            window.scrollTo(0, 0)
-                            window.location.href = '/'
-                        }}
-                        className="text-sky-400 hover:text-sky-300 font-medium underline underline-offset-4"
-                    >
-                        Go to home to personalize your feed
-                    </button>
+                    <p className="text-slate-400 mb-4">
+                        {selectedCategories.length === 0 
+                            ? "You haven't selected any categories yet." 
+                            : "No articles currently available for your selection."}
+                    </p>
+                    {selectedCategories.length === 0 && (
+                        <button
+                            onClick={() => {
+                                window.scrollTo(0, 0)
+                                window.location.href = '/'
+                            }}
+                            className="text-sky-400 hover:text-sky-300 font-medium underline underline-offset-4"
+                        >
+                            Go to home to personalize your feed
+                        </button>
+                    )}
                 </div>
             ) : (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
